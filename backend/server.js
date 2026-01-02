@@ -19,9 +19,7 @@ connectDB();
 ====================== */
 app.use(
   cors({
-    origin: [
-      "https://login-page-eta-tawny.vercel.app/",
-    ], // Vite frontend
+    origin: API, // Vite frontend
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
