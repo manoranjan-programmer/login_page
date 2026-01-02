@@ -19,7 +19,9 @@ connectDB();
 ====================== */
 app.use(
   cors({
-    origin: API, // Vite frontend
+    origin: [
+      "https://login-page-eta-tawny.vercel.app/",
+    ], // Vite frontend
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
@@ -39,6 +41,7 @@ app.get("/", (req, res) => {
   res.status(200).json({ message: "API is running 🚀" });
 });
 
+app.options("*", cors());
 /* ======================
    SERVER START
 ====================== */
