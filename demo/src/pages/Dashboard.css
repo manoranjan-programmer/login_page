@@ -1,0 +1,44 @@
+.dashboard {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #00111a, #000);
+  color: #00ffff;
+  padding: 20px;
+  font-family: monospace;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-header button {
+  background: transparent;
+  border: 1px solid #00ffff;
+  color: #00ffff;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.welcome span {
+  color: #00ff99;
+}
+
+.charts-grid {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.chart-card {
+  background: rgba(0, 255, 255, 0.05);
+  border: 1px solid #00ffff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.chart-card h3 {
+  margin-bottom: 10px;
+  color: #00ffcc;
+}
