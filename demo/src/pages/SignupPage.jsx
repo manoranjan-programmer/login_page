@@ -33,7 +33,6 @@ export default function Signup() {
     try {
       const res = await fetch(`${API_URL}/api/auth/signup`, {
         method: "POST",
-        credentials: "include", // ✅ REQUIRED FOR CORS
         headers: {
           "Content-Type": "application/json",
         },
