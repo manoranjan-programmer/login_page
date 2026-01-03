@@ -19,7 +19,7 @@ connectDB();
 ====================== */
 app.use(
   cors({
-    origin: API, // Vite frontend
+    origin: [`${API}`], // Vite frontend
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
