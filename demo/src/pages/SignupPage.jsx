@@ -7,26 +7,38 @@ export default function Signup() {
 
   const API_URL = import.meta.env.VITE_API_URL;
 
-
-  const [name, setName] = useState(""); // ✅ ADD
+  /* ======================
+     STATE
+  ====================== */
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  /* ======================
+     SUBMIT HANDLER
+  ====================== */
   const handleSignup = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
+    if (!API_URL) {
+      setError("API URL not configured");
+      setLoading(false);
+      return;
+    }
+
     try {
       const res = await fetch(`${API_URL}/api/auth/signup`, {
         method: "POST",
+        credentials: "include", // ✅ REQUIRED FOR CORS
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name,      // ✅ SEND NAME
+          name,
           email,
           password,
         }),
@@ -35,18 +47,22 @@ export default function Signup() {
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.message || "Signup failed");
+        setError(data?.message || "Signup failed");
         return;
       }
 
-      navigate("/"); // go to login
+      navigate("/"); // redirect to login
     } catch (err) {
-      setError("Server error");
+      console.error("Signup error:", err);
+      setError("Unable to connect to server");
     } finally {
       setLoading(false);
     }
   };
 
+  /* ======================
+     UI
+  ====================== */
   return (
     <div className="login-page">
       <div className="login-container">
@@ -59,7 +75,7 @@ export default function Signup() {
 
           <form className="login-form" onSubmit={handleSignup}>
 
-            {/* ✅ NAME FIELD */}
+            {/* NAME */}
             <div className="input-group">
               <input
                 type="text"
@@ -72,6 +88,7 @@ export default function Signup() {
               <label>Full Name</label>
             </div>
 
+            {/* EMAIL */}
             <div className="input-group">
               <input
                 type="email"
@@ -84,6 +101,7 @@ export default function Signup() {
               <label>Email Address</label>
             </div>
 
+            {/* PASSWORD */}
             <div className="input-group">
               <input
                 type="password"
@@ -96,6 +114,7 @@ export default function Signup() {
               <label>Password</label>
             </div>
 
+            {/* ERROR */}
             {error && (
               <p style={{ color: "red", marginBottom: "12px" }}>
                 {error}

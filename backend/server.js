@@ -16,17 +16,21 @@ const app = express();
 connectDB();
 
 /* ======================
-   MIDDLEWARE
+   MIDDLEWARE (ORDER MATTERS)
 ====================== */
 app.use(express.json());
 
 app.use(
   cors({
-    origin: process.env.API_URL,
+    origin: process.env.API_URL, // ✅ FRONTEND URL
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
+// ✅ HANDLE PREFLIGHT REQUESTS
+app.options("*", cors());
 
 /* ======================
    ROUTES
@@ -36,14 +40,14 @@ app.use("/api/auth", require("./routes/authRoutes"));
 /* ======================
    HEALTH CHECK
 ====================== */
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
   res.json({ message: "API is running 🚀" });
 });
 
 /* ======================
-   SAFE 404 (Node 22 FIX)
+   SAFE 404
 ====================== */
-app.use((req, res) => {
+app.use((_req, res) => {
   res.status(404).json({ message: "Route not found" });
 });
 
